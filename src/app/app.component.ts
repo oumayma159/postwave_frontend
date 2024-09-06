@@ -1,18 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { StorageService } from './_services/storage.service';
 import { EventBusService } from './_shared/event-bus.service';
 import { Router } from '@angular/router';
+import { AuthService } from './_services/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  private roles: string[] = [];
-  isLoggedIn = false;
-  showAdminBoard = false;
+export class AppComponent implements OnInit {
+  isLoggedIn: boolean= false;
   username?: string;
 
   eventBusSub?: Subscription;
@@ -20,21 +19,14 @@ export class AppComponent {
   constructor(
     private storageService: StorageService,
     private eventBusService: EventBusService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.isLoggedIn = this.storageService.isLoggedIn();
-
-    if (this.isLoggedIn) {
-      const user = this.storageService.getUser();
-      this.roles = user.roles;
-
-      this.showAdminBoard = this.roles.includes('ADMIN');
-
-      this.username = user.username;
-    }
-
+    this.authService.isLoggedIn$.subscribe(res => {
+      this.isLoggedIn = this.storageService.isLoggedIn();
+    });
     this.eventBusSub = this.eventBusService.on('logout', () => {
       this.logout();
     });
@@ -42,7 +34,8 @@ export class AppComponent {
 
   logout(): void {
     this.storageService.logout();
-    this.isLoggedIn = false;
+    //update observable
+    this.authService.isLoggedIn$.next(false);
     this.router.navigate(['/home']);
   }
 }

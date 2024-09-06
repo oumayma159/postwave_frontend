@@ -10,7 +10,7 @@
         </li>
     </ul>
 
-    @if (!isLoggedIn) {
+    <<ng-container *ngIf="!isLoggedIn" >
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
@@ -19,7 +19,9 @@
           <a href="/login" class="nav-link" routerLink="login">Login</a>
         </li>
       </ul>
-    } @else {
+    </ng-container>
+
+    <<ng-container *ngIf="isLoggedIn" >
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <a href="/user" class="nav-link" routerLink="profile">{{ username }}</a>
@@ -28,7 +30,7 @@
           <a href class="nav-link" (click)="logout()">LogOut</a>
         </li>
       </ul>
-    }
+    </ng-container>  
   </nav>
 
   <div class="container">

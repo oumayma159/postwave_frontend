@@ -44,8 +44,10 @@ export class RegisterComponent {
           this.isSignUpFailed = false;
           localStorage.setItem('accessToken', response.access_token);
           console.log('Token saved', response.access_token);
-          this.isLoggedIn = true;
+          //update observable
+          this.authService.isLoggedIn$.next(true);
           this.router.navigate(['/home']);
+          this.registerForm.reset();
         },
         error: error => {
           console.error('Registration error', error);

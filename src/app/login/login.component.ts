@@ -37,9 +37,11 @@ export class LoginComponent implements OnInit {
         next: response => {
           console.log('Login successful', response);
           localStorage.setItem('accessToken', response.access_token);
-          this.isLoggedIn = true;
+          //update observable
+          this.authService.isLoggedIn$.next(true);
           // this.storageService.saveUser(response.user); 
           this.router.navigate(['/home']);
+          this.loginForm.reset();
         },
         error: error => {
           console.error('Login error', error);

@@ -18,15 +18,18 @@ export class BoardUserComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const userId = this.storageService.getUser().id; 
-    console.log('User ID', userId);
-    this.userService.getUserById(userId).subscribe({
-      next: (data: User) => {
-        this.user = data;
-      },
-      error: (err) => {
-        this.errorMessage = err.error.message;
-      }
-    });
+    const token = this.storageService.getToken();
+    if (token) {
+      this.userService.getUserFromToken(token).subscribe({
+        next: (data: User) => {
+          this.user = data;
+        },
+        error: (err) => {
+          this.errorMessage = err.error.message;
+        }
+      });
+    } else {
+      this.errorMessage = 'No token found';
+    }
   }
 }
