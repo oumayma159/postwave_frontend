@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../_services/user.service';
-import { StorageService } from '../_services/storage.service';
-import { User } from '../models/user.model'; // Adjust the path as necessary
+import { UserService } from '../../_services/user.service';
+import { StorageService } from '../../_services/storage.service';
+import { User } from '../../models/user.model'; // Adjust the path as necessary
 
 @Component({
   selector: 'app-board-user',

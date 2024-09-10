@@ -17,13 +17,13 @@ export class UserService {
     return this.http.get<User[]>(`${this.apiUrl}/all_users`);
   }
 
-  getUserById(id: number): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/get_user/${id}`);
+  getUserByEmail(email: string): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/get_user_by_email/${email}`);
   }
 
   getUserFromToken(token: string): Observable<User> {
     const decodedToken = this.jwtHelper.decodeToken(token);
-    const userId = decodedToken.sub; 
-    return this.getUserById(userId);
+    const userEmail = decodedToken.sub; 
+    return this.getUserByEmail(userEmail);
   }
 }

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../_services/auth.service';
-import { StorageService } from '../_services/storage.service';
-import { AuthenticationRequest } from '../models/authentication-request.model';
+import { AuthService } from '../../_services/auth.service';
+import { AuthenticationRequest } from '../../models/authentication-request.model';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +18,6 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private storageService: StorageService,
     private router: Router
   ) {
     this.loginForm = this.fb.group({

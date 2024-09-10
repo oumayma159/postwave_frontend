@@ -6,13 +6,14 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
 import { HomeComponent } from './home/home.component';
-import { ProfileComponent } from './profile/profile.component';
-import { BoardUserComponent } from './board-user/board-user.component';
-import { httpInterceptorProviders } from './_helpers/http.interceptor';
-import { CreatePostComponent } from './create-post/create-post.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { BoardUserComponent } from './pages/board-user/board-user.component';
+import { httpInterceptorProviders } from './interceptors/http.interceptor';
+import { CreatePostComponent } from './pages/create-post/create-post.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CreatePostComponent } from './create-post/create-post.component';
     HomeComponent,
     ProfileComponent,
     BoardUserComponent,
-    CreatePostComponent
+    CreatePostComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

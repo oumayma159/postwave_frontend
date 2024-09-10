@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router'; // Import Router
 
-import { RegisterRequest } from '../models/register-request.model'; // Adjust the path as necessary
-import { Role } from '../enums/role.enum';
-import { AuthService } from '../_services/auth.service';
-import { StorageService } from '../_services/storage.service';
+import { RegisterRequest } from '../../models/register-request.model'; // Adjust the path as necessary
+import { Role } from '../../enums/role.enum';
+import { AuthService } from '../../_services/auth.service';
+import { StorageService } from '../../_services/storage.service';
 
 @Component({
   selector: 'app-register',
