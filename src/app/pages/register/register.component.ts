@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router'; // Import Router
-
-import { RegisterRequest } from '../../models/register-request.model'; // Adjust the path as necessary
-import { Role } from '../../enums/role.enum';
-import { AuthService } from '../../_services/auth.service';
-import { StorageService } from '../../_services/storage.service';
+import { Router } from '@angular/router'; 
+import { RegisterRequest } from '../../models/register-request.model'; 
+import { Role } from '../../models/enums/role.enum';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -16,44 +14,40 @@ export class RegisterComponent {
   registerForm: FormGroup;
   roles = Role; 
   isSuccessful = false;
-  isSignUpFailed = false;
-  errorMessage = '';
+  error={isSignUpFailed:false};
   isLoggedIn = false;
 
   constructor(
     private fb: FormBuilder, 
     private authService: AuthService,
     private router: Router,
-    private storageService: StorageService
   ) {
     this.registerForm = this.fb.group({
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.pattern(/(?=.*[A-Z])/), 
+        Validators.pattern(/(?=.*[!@#$%^&*(),.?":{}|<>])/), 
+      ]],
       role: [Role.USER, Validators.required] 
     });
   }
 
   onSubmit() {
     if (this.registerForm.valid) {
-      this.authService.register(this.registerForm.value as RegisterRequest).subscribe({
-        next: response => {
-          console.log('Registration successful', response);
+      this.authService.register(this.registerForm.value as RegisterRequest,this.error).subscribe(
+       (response) => {
           this.isSuccessful = true;
-          this.isSignUpFailed = false;
+          this.error.isSignUpFailed = false;
           localStorage.setItem('accessToken', response.access_token);
-          console.log('Token saved', response.access_token);
           //update observable
           this.authService.isLoggedIn$.next(true);
           this.router.navigate(['/home']);
           this.registerForm.reset();
-        },
-        error: error => {
-          console.error('Registration error', error);
-          this.errorMessage = error.error.message;
-          this.isSignUpFailed = true;
-        }
+        
       });
     }
   }

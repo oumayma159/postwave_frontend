@@ -22,6 +22,7 @@
     "autoprefixer": "^10.4.20",
     "bootstrap": "^4.6.2",
     "esbuild": "^0.23.1",
+    "ngx-toastr": "^19.0.0",
     "postcss": "^8.4.45",
     "rxjs": "~7.8.0",
     "tailwindcss": "^3.4.10",

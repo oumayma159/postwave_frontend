@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../_services/user.service';
-import { StorageService } from '../../_services/storage.service';
-import { User } from '../../models/user.model'; // Adjust the path as necessary
+import { User } from '../../models/user.model'; 
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-board-user',
@@ -13,23 +12,12 @@ export class BoardUserComponent implements OnInit {
   errorMessage = '';
 
   constructor(
-    private userService: UserService,
-    private storageService: StorageService
+    private activatedRoute:ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    const token = this.storageService.getToken();
-    if (token) {
-      this.userService.getUserFromToken(token).subscribe({
-        next: (data: User) => {
-          this.user = data;
-        },
-        error: (err) => {
-          this.errorMessage = err.error.message;
-        }
-      });
-    } else {
-      this.errorMessage = 'No token found';
-    }
+    this.activatedRoute.data.subscribe(data => {
+      this.user = data['user'];
+    });
   }
 }

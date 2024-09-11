@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { StorageService } from '../_services/storage.service';
-import { PostService } from '../_services/post.service';
+import { StorageService } from '../services/storage.service';
+import { PostService } from '../services/post.service';
 import { Post } from '../models/post.model';
 
 @Component({

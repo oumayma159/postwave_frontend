@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, EMPTY, Observable } from 'rxjs';
 import { Post } from '../models/post.model';
 
 @Injectable({
@@ -16,6 +16,13 @@ export class PostService {
   }
 
   createPost(post: Post): Observable<Post> {
-    return this.http.post<Post>(`${this.apiUrl}/add_post`, post);
+    return this.http.post<Post>(`${this.apiUrl}/add_post`, post)
+    .pipe(
+      catchError(()=>{
+        console.error('Error creating post');
+        return EMPTY;
+      } )
+    )
+    ;
   }
 }

@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { StorageService } from '../../_services/storage.service';
+import { StorageService } from '../../services/storage.service';
 import { EventBusService } from '../../_shared/event-bus.service';
-import { AuthService } from '../../_services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable ,catchError,EMPTY} from 'rxjs';
 import { User } from '../models/user.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
@@ -13,17 +13,22 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
+  //http method return an observable thar will be used in the component (profile)
   getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/all_users`);
+    return this.http.get<User[]>(`${this.apiUrl}/all_users`)
+    .pipe(
+      catchError((err) => {
+        console.error('Error fetching users', err);
+        return EMPTY;
+      })
+    );
   }
 
   getUserByEmail(email: string): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/get_user_by_email/${email}`);
   }
 
-  getUserFromToken(token: string): Observable<User> {
-    const decodedToken = this.jwtHelper.decodeToken(token);
-    const userEmail = decodedToken.sub; 
-    return this.getUserByEmail(userEmail);
+  getUserFromToken(): Observable<User> { 
+    return this.http.get<User>(`${this.apiUrl}/currentUser`);
   }
 }

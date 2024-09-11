@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { Post } from '../../models/post.model';
-import { PostService } from '../../_services/post.service';
+import { PostService } from '../../services/post.service';
 
 @Component({
   selector: 'app-create-post',
@@ -30,16 +29,10 @@ export class CreatePostComponent {
         title: this.createPostForm.get('title')?.value,
         description: this.createPostForm.get('description')?.value
       };
-
-      console.log('Creating post with data:', newPost);
       
       this.postService.createPost(newPost).subscribe(
-        response => {
-          console.log('Post created successfully', response);
+        () => {
           this.router.navigate(['/home']); 
-        },
-        error => {
-          console.error('Error creating post', error);
         }
       );
     }
