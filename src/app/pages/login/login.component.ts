@@ -35,10 +35,16 @@ export class LoginComponent implements OnInit {
         next: response => {
           console.log('Login successful', response);
           localStorage.setItem('accessToken', response.access_token);
+          localStorage.setItem('userId', response.userId.toString());
           //update observable
           this.authService.isLoggedIn$.next(true);
-          // this.storageService.saveUser(response.user); 
-          this.router.navigate(['/home']);
+          // role based authentification
+          if (response.role == "USER") {
+            this.router.navigate(['/home']);
+          }
+          else {
+            this.router.navigate(['/admin']);
+          }
           this.loginForm.reset();
         },
         error: error => {

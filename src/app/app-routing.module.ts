@@ -9,6 +9,8 @@ import { BoardUserComponent } from './pages/board-user/board-user.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CreatePostComponent } from './pages/create-post/create-post.component';
 import { userDetailsResolver } from './resolvers/user-details.resolver';
+import { UserPostComponent } from './pages/user-post/user-post.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -21,6 +23,8 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   { path: 'create-post', component: CreatePostComponent, canActivate: [AuthGuard] },
+  { path: 'userPosts', component: UserPostComponent , canActivate: [AuthGuard] },
+  { path: 'admin', component: AdminComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
 import { EventBusService } from '../../_shared/event-bus.service';
 import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -13,7 +14,8 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = false;
-  username?: string;
+  username?: string = '';
+  user$ = this.userService.getUserFromToken();
 
   eventBusSub?: Subscription;
 
@@ -21,15 +23,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private storageService: StorageService,
     private eventBusService: EventBusService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
     this.authService.isLoggedIn$.subscribe(res => {
       this.isLoggedIn = this.storageService.isLoggedIn();
-      if (this.isLoggedIn) {
-        this.username = this.storageService.getUser().username;
-      }
+    
     });
     this.eventBusSub = this.eventBusService.on('logout', () => {
       this.logout();

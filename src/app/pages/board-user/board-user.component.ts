@@ -1,23 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from '../../models/user.model'; 
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-board-user',
   templateUrl: './board-user.component.html',
   styleUrls: ['./board-user.component.css']
 })
-export class BoardUserComponent implements OnInit {
-  user: User | null = null;
-  errorMessage = '';
+export class BoardUserComponent  {
+  user$ = this.userService.getUserFromToken();
 
   constructor(
-    private activatedRoute:ActivatedRoute
+    private userService: UserService
   ) {}
 
-  ngOnInit(): void {
-    this.activatedRoute.data.subscribe(data => {
-      this.user = data['user'];
-    });
-  }
 }

@@ -1,0 +1,21 @@
+<div class="container mx-auto px-4">
+    <h1 class="text-3xl font-bold text-indigo-600 mb-6 text-center pt-3">My Posts</h1>
+    <div *ngIf="posts$ | async as posts else noPosts">
+      <div *ngFor="let post of posts" class="mb-6 p-6 border rounded-lg shadow-lg bg-white">
+        <p class="text-sm text-gray-500 mb-2">Posted by <span class="font-semibold">{{ post.user.firstname }}</span></p>
+        <h2 class="text-2xl font-bold text-indigo-700 mb-2">{{ post.title }}</h2>
+        <p class="text-gray-700 mb-4">{{ post.description }}</p>
+        <div class="flex space-x-4">
+          <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300">
+            <i (click)="deletePost(post.id)" class="fas fa-trash mr-1"></i>
+          </button>
+          <button class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition duration-300">
+            <i (click)="updatePost(post.id)" class="fas fa-edit mr-1"></i> Update
+          </button>
+        </div>
+      </div>
+    </div>
+    <ng-template #noPosts>
+      <p class="text-gray-700 mt-4 text-center">No posts available. Create your first post!</p>
+    </ng-template>
+  </div>

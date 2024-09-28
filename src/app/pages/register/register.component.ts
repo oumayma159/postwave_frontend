@@ -28,9 +28,9 @@ export class RegisterComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [
         Validators.required,
-        Validators.minLength(6),
-        Validators.pattern(/(?=.*[A-Z])/), 
-        Validators.pattern(/(?=.*[!@#$%^&*(),.?":{}|<>])/), 
+        // Validators.minLength(6),
+        // Validators.pattern(/(?=.*[A-Z])/), 
+        // Validators.pattern(/(?=.*[!@#$%^&*(),.?":{}|<>])/), 
       ]],
       role: [Role.USER, Validators.required] 
     });
@@ -43,9 +43,15 @@ export class RegisterComponent {
           this.isSuccessful = true;
           this.error.isSignUpFailed = false;
           localStorage.setItem('accessToken', response.access_token);
+          localStorage.setItem('userId', response.userId.toString());
           //update observable
           this.authService.isLoggedIn$.next(true);
-          this.router.navigate(['/home']);
+          if (response.role == "USER") {
+            this.router.navigate(['/home']);
+          }
+          else {
+            this.router.navigate(['/admin']);
+          }
           this.registerForm.reset();
         
       });

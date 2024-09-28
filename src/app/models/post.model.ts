@@ -1,6 +1,10 @@
-export interface Post {
+import { User } from "./user.model";
 
-    title: string;
-    description: string;
+export class Post {
+
+    id: number=0;
+    title: string = '';
+    description: string='';
+    user : User = new User();
     
   }

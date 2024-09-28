@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class StorageService {
     return localStorage.getItem('accessToken');
   }
 
-  public getUser(): any {
+  public getUser(): User | null {
     const user = localStorage.getItem('user');
     if (user) {
       return JSON.parse(user);

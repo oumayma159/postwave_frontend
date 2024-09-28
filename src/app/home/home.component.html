@@ -11,23 +11,32 @@
       Create Post
     </button>
   </div>
-  <div class="flex justify-end mb-4">
+  <!-- <div class="flex justify-end mb-4">
     <a
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       [routerLink]="['/profile']"
     >
       View All Users
     </a>
-  </div>
+  </div> -->
 
-  <div *ngIf="posts.length > 0; else noPosts">
+  <div *ngIf="posts$ | async as posts else noPosts">
     <div *ngFor="let post of posts" class="mb-4 p-4 border rounded shadow-sm">
+      <p class="text-sm text-gray-500">Posted by {{ post.user.firstname }}</p>
       <h2 class="text-2xl font-bold text-indigo-600">{{ post.title }}</h2>
       <p class="text-gray-700 mt-2">{{ post.description }}</p>
+      <div class="mt-4">
+        <button class="mr-2 bg-blue-500 text-white px-4 py-2 rounded">
+          <i (click)="addLike(post.id, userId)" [class]="isLiked ? 'fas fa-heart text-red-500 mr-1' : 'far fa-heart mr-1'"></i> Likes
+        </button>
+      </div>
+      <div class="mt-4">
+        <input type="text"  placeholder="Write a comment..." class="border rounded px-2 py-1 w-full">
+        <button class="mt-2 bg-green-500 text-white px-4 py-2 rounded">Add Comment</button>
+      </div>
     </div>
   </div>
   <ng-template #noPosts>
     <p class="text-gray-700 mt-4">No posts available. Be the first to create a post!</p>
-  </ng-template>
-  
+  </ng-template>  
 </div>

@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { StorageService } from '../services/storage.service';
 import { PostService } from '../services/post.service';
-import { Post } from '../models/post.model';
+import { ToastrService } from 'ngx-toastr';
+import { LikeService } from '../services/like.service';
 
 @Component({
   selector: 'app-home',
@@ -11,35 +10,38 @@ import { Post } from '../models/post.model';
   styleUrls: ['./home.component.css']
 })
 
-export class HomeComponent implements OnInit {
-  posts: Post[] = [];
-  isLoggedIn = false;
+export class HomeComponent  {
+  posts$ =  this.postService.getAllPosts();
+  userId: any;
+  isLiked = false;
 
   constructor(
-    private storageService: StorageService,
     private router: Router,
-    private postService: PostService
-  ) {
-    
-  }
+    private toastr: ToastrService,
+    private postService: PostService,
+    private likeService: LikeService
+  ) {}
 
   ngOnInit(): void {
-    this.isLoggedIn = this.storageService.isLoggedIn();
-    this.fetchPosts();
-  }
-
-  fetchPosts(): void {
-    this.postService.getAllPosts().subscribe(
-      (data: Post[]) => {
-        this.posts = data;
-      },
-      error => {
-        console.error('Error fetching posts', error);
-      }
-    );
+    const userIdString = localStorage.getItem('userId');
+    this.userId = userIdString ? parseInt(userIdString, 10) : null;
   }
   
   createPost() {
     this.router.navigate(['/create-post']);
   }
+
+  addLike(postId: number,userId:number) {
+    this.likeService.likePost(postId,userId).subscribe(() => {
+      this.toastr.success('Post liked successfully!', '');
+      // this.posts$ = this.postService.getAllPosts();
+      this.isLiked = true;
+    });
+  }
+
+  addComment(postId: number) {
+
+  }
+
+
 }

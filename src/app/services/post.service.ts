@@ -12,7 +12,36 @@ export class PostService {
   constructor(private http: HttpClient) { }
 
   getAllPosts(): Observable<Post[]> {
-    return this.http.get<Post[]>(`${this.apiUrl}/all_posts`);
+    return this.http.get<Post[]>(`${this.apiUrl}/all_posts`)
+    .pipe(
+      catchError((err) => {
+        console.error('Error fetching posts', err);
+        return EMPTY;
+      })
+    );
+    ;
+  }
+
+  getPostById(postId: number): Observable<Post> {
+    return this.http.get<Post>(`${this.apiUrl}/getPost/${postId}`)
+    .pipe(
+      catchError((err) => {
+        console.error('Error fetching post', err);
+        return EMPTY;
+      })
+    );
+    ;
+  }
+
+  getPostsById(userId: number): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.apiUrl}/${userId}`)
+    .pipe(
+      catchError((err) => {
+        console.error('Error fetching user posts', err);
+        return EMPTY;
+      })
+    );
+    ;
   }
 
   createPost(post: Post): Observable<Post> {
@@ -25,4 +54,27 @@ export class PostService {
     )
     ;
   }
+
+  updatePost(postId: number, post: Post): Observable<Post> {
+    return this.http.put<Post>(`${this.apiUrl}/update/${postId}`, post)
+    .pipe(
+      catchError(()=>{
+        console.error('Error updating post');
+        return EMPTY;
+      } )
+    )
+    ;
+  }
+
+  deletePost(postId: number): Observable<Post> {
+    return this.http.delete<Post>(`${this.apiUrl}/delete/${postId}`)
+    .pipe(
+      catchError(()=>{
+        console.error('Error deleting post');
+        return EMPTY;
+      } )
+    )
+    ;
+  }
+
 }
