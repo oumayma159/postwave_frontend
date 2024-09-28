@@ -1,4 +1,5 @@
 import { User } from "./user.model";
+import { Comment } from "./comment.model";
 
 export class Post {
 
@@ -6,5 +7,8 @@ export class Post {
     title: string = '';
     description: string='';
     user : User = new User();
+    numberOfLikes: number=0;
+    isLiked: boolean=false;
+    comments: Comment[] = [];
     
   }
