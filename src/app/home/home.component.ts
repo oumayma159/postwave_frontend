@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { LikeService } from '../services/like.service';
 import { CommentService } from '../services/comment.service';
 import { Comment } from '../models/comment.model';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, Observable, tap } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 import { Post } from '../models/post.model';
@@ -17,7 +17,12 @@ import { Post } from '../models/post.model';
 })
 
 export class HomeComponent  {
-  posts$ =  this.postService.getAllPosts();
+  comments : string[] = [];
+  posts$ =  this.postService.getAllPosts().pipe(
+    tap((posts: Post[]) => {
+      posts.map(() => this.comments.push(''));
+    }
+  ));
   selectedPostId: number | null = null;
   userId: any;
   isLiked = false;
@@ -35,17 +40,29 @@ export class HomeComponent  {
     const userIdString = localStorage.getItem('userId');
     this.userId = userIdString ? parseInt(userIdString, 10) : null;
   }
+
+  changeCommentInput(event: any, index: number) {
+    this.comments[index] = event.target.value;
+  }
   
   createPost() {
     this.router.navigate(['/create-post']);
   }
 
-  addLike(postId: number,userId:number) {
-    this.likeService.likePost(postId,userId).subscribe(() => {
-      this.toastr.success('Post liked successfully!', '');
-      // this.posts$ = this.postService.getAllPosts();
-      this.isLiked = true;
-    });
+  addLike(post: Post): void {
+    if (post.liked) {
+      // unlike
+      this.likeService.unlikePost(post.id).subscribe(() => {
+        post.liked = false;
+        post.numberLikes--;
+      });
+    } else {
+      // like
+      this.likeService.likePost(post.id).subscribe(() => {
+        post.liked = true;
+        post.numberLikes++;
+      });
+    }
   }
 
   loadComments(post: Post) {
@@ -54,14 +71,14 @@ export class HomeComponent  {
     });
   }
 
-  addComment(post: Post, userConnected: User) {
-    if (this.newComment.trim()) {
+  addComment(post: Post, userConnected: User, index: number) {
+    if (this.comments[index].trim()) {
       const comment: Comment = {
-        content: this.newComment,
+        content: this.comments[index],
         author : userConnected
       };
       this.commentService.addComment(comment, post.id).subscribe(() => {
-        this.newComment = ''; 
+        this.comments[index] = '';  
         this.loadComments(post);
       });
     }

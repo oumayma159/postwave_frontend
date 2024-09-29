@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <a href="#" class="navbar-brand">PostWave</a>
+  <a href="#" class="navbar-brand">PostWave</a>
+  <ng-container *ngIf="!isAdmin">
     <ul class="navbar-nav mr-auto" routerLinkActive="active">
       <li class="nav-item">
         <a href="/home" class="nav-link" routerLink="home">Home</a>
@@ -11,26 +12,27 @@
         <a href="/userPosts" class="nav-link" routerLink="userPosts">My Posts</a>
       </li>
     </ul>
-  
-    <ng-container *ngIf="!isLoggedIn">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
-        </li>
-        <li class="nav-item">
-          <a href="/login" class="nav-link" routerLink="login">Login</a>
-        </li>
-      </ul>
-    </ng-container>
-  
-    <ng-container *ngIf="isLoggedIn">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a href="/user" class="nav-link" routerLink="profile">{{ username }}</a>
-        </li>
-        <li class="nav-item">
-          <a href class="nav-link" (click)="logout()">LogOut</a>
-        </li>
-      </ul>
-    </ng-container>
-  </nav>
+  </ng-container>
+
+  <ng-container *ngIf="!isLoggedIn">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
+      </li>
+      <li class="nav-item">
+        <a href="/login" class="nav-link" routerLink="login">Login</a>
+      </li>
+    </ul>
+  </ng-container>
+
+  <ng-container *ngIf="isLoggedIn">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item" *ngIf="!isAdmin">
+        <a href="/user" class="nav-link" routerLink="profile">{{ username }}</a>
+      </li>
+      <li class="nav-item">
+        <a href class="nav-link" (click)="logout()">LogOut</a>
+      </li>
+    </ul>
+  </ng-container>
+</nav>

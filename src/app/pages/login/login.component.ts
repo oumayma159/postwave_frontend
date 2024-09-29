@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
           console.log('Login successful', response);
           localStorage.setItem('accessToken', response.access_token);
           localStorage.setItem('userId', response.userId.toString());
+          localStorage.setItem('role', response.role);
           //update observable
           this.authService.isLoggedIn$.next(true);
           // role based authentification

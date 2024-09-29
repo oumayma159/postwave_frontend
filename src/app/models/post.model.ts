@@ -7,8 +7,8 @@ export class Post {
     title: string = '';
     description: string='';
     user : User = new User();
-    numberOfLikes: number=0;
-    isLiked: boolean=false;
+    numberLikes: number=0;
+    liked: boolean=false;
     comments: Comment[] = [];
     
   }

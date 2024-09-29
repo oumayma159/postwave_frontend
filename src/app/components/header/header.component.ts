@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = false;
   username?: string = '';
   user$ = this.userService.getUserFromToken();
+  isAdmin = false;
 
   eventBusSub?: Subscription;
 
@@ -29,12 +30,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.authService.isLoggedIn$.subscribe(res => {
-      this.isLoggedIn = this.storageService.isLoggedIn();
-    
+      this.isLoggedIn = this.storageService.isLoggedIn(); 
     });
     this.eventBusSub = this.eventBusService.on('logout', () => {
       this.logout();
     });
+    this.isAdmin = localStorage.getItem('role')?.includes('ADMIN')|| false;
   }
 
   ngOnDestroy(): void {

@@ -12,8 +12,8 @@ export class LikeService {
 
   constructor(private http: HttpClient) {}
 
-  likePost(postId: number,userId:number): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/add_like/${userId}/${postId}`, {})
+  likePost(postId: number): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/add_like/${postId}`, {})
       .pipe(
         catchError((err) => {
           console.error('Error liking post', err);

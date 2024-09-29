@@ -10,6 +10,7 @@ import { AuthenticationRequest } from '../models/authentication-request.model'; 
 export class AuthService {
   errorMessage = '';
   isLoggedIn$ = new BehaviorSubject<boolean>(false); 
+  
 
   private apiUrl = `http://localhost:8080/api/v1/auth`;
 

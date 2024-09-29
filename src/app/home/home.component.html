@@ -13,18 +13,19 @@
   </div>
 
   <div *ngIf="posts$ | async as posts else noPosts">
-    <div *ngFor="let post of posts" class="mb-4 p-4 border rounded shadow-sm">
+    <div *ngFor="let post of posts; let i=index" class="mb-4 p-4 border rounded shadow-sm">
       <p class="text-sm text-gray-500">Posted by {{ post.user.firstname }}</p>
       <h2 class="text-2xl font-bold text-indigo-600">{{ post.title }}</h2>
       <p class="text-gray-700 mt-2">{{ post.description }}</p>
       <div class="mt-4">
         <button class="mr-2 bg-blue-500 text-white px-4 py-2 rounded">
-          <i (click)="addLike(post.id, userId)" [class]="isLiked ? 'fas fa-heart text-red-500 mr-1' : 'far fa-heart mr-1'"></i> {{post.numberOfLikes}} Likes
+          {{post.numberLikes}} Likes
+          <i (click)="addLike(post)" [ngClass]="post.liked ? 'fas fa-heart text-red-500 mr-1' : 'far fa-heart mr-1'"></i> 
         </button>
       </div>
       <div class="mt-4">
-        <input type="text" [(ngModel)]="newComment" placeholder="Write a comment..." class="border rounded px-2 py-1 w-full">
-        <button class="mt-2 bg-green-500 text-white px-4 py-2 rounded"(click)="addComment(post ,post.user)">Add Comment</button>
+        <input type="text" (change)="changeCommentInput($event,i)" [value]="comments[i]" placeholder="Write a comment..." class="border rounded px-2 py-1 w-full">
+        <button class="mt-2 bg-green-500 text-white px-4 py-2 rounded"(click)="addComment(post ,post.user,i)">Add Comment</button>
       </div>
       <!-- afficher les commentaires -->
       <div class="mt-4">
