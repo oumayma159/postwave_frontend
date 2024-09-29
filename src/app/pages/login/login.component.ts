@@ -33,17 +33,14 @@ export class LoginComponent implements OnInit {
       const loginRequest: AuthenticationRequest = this.loginForm.value;
       this.authService.login(loginRequest).subscribe({
         next: response => {
-          console.log('Login successful', response);
           localStorage.setItem('accessToken', response.access_token);
-          localStorage.setItem('userId', response.userId.toString());
-          localStorage.setItem('role', response.role);
           //update observable
           this.authService.isLoggedIn$.next(true);
           // role based authentification
-          if (response.role == "USER") {
+          if (response.role.includes('USER')) {
             this.router.navigate(['/home']);
           }
-          else {
+          else if (response.role.includes('ADMIN')) {
             this.router.navigate(['/admin']);
           }
           this.loginForm.reset();

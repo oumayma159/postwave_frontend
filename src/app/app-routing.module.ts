@@ -11,6 +11,7 @@ import { CreatePostComponent } from './pages/create-post/create-post.component';
 import { userDetailsResolver } from './resolvers/user-details.resolver';
 import { UserPostComponent } from './pages/user-post/user-post.component';
 import { AdminComponent } from './pages/admin/admin.component';
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -24,7 +25,7 @@ const routes: Routes = [
   },
   { path: 'create-post', component: CreatePostComponent, canActivate: [AuthGuard] },
   { path: 'userPosts', component: UserPostComponent , canActivate: [AuthGuard] },
-  { path: 'admin', component: AdminComponent},
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

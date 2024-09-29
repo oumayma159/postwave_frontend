@@ -11,8 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class UserPostComponent {
 
-  connectedUserId = localStorage.getItem('userId');
-  posts$ = this.postService.getPostsById(Number(this.connectedUserId));
+  posts$ = this.postService.getPostsById();
 
   constructor(
     private postService: PostService,
@@ -23,7 +22,7 @@ export class UserPostComponent {
   deletePost(postId: number) {
     this.postService.deletePost(postId).subscribe(() => {
       this.toastr.success('Post deleted successfully!', '');
-      this.posts$ = this.postService.getPostsById(Number(this.connectedUserId));
+      this.posts$ = this.postService.getPostsById();
     });
   }
 
@@ -36,7 +35,7 @@ export class UserPostComponent {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.posts$ = this.postService.getPostsById(Number(this.connectedUserId));
+          this.posts$ = this.postService.getPostsById();
         }
       });
     });

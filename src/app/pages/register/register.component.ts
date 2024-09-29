@@ -43,7 +43,6 @@ export class RegisterComponent {
           this.isSuccessful = true;
           this.error.isSignUpFailed = false;
           localStorage.setItem('accessToken', response.access_token);
-          localStorage.setItem('userId', response.userId.toString());
           //update observable
           this.authService.isLoggedIn$.next(true);
           if (response.role == "USER") {

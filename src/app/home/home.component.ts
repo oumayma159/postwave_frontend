@@ -24,9 +24,8 @@ export class HomeComponent  {
     }
   ));
   selectedPostId: number | null = null;
-  userId: any;
-  isLiked = false;
-  newComment: string = '';
+  // userConnected$: User = this.userService.getUserFromToken();
+  
 
   constructor(
     private router: Router,
@@ -34,12 +33,9 @@ export class HomeComponent  {
     private postService: PostService,
     private likeService: LikeService,
     private commentService: CommentService,
+    private userService: UserService
   ) {}
 
-  ngOnInit(): void {
-    const userIdString = localStorage.getItem('userId');
-    this.userId = userIdString ? parseInt(userIdString, 10) : null;
-  }
 
   changeCommentInput(event: any, index: number) {
     this.comments[index] = event.target.value;

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { UserService } from '../../services/user.service';
 import { PostService } from '../../services/post.service';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-admin',
@@ -10,11 +10,11 @@ import { PostService } from '../../services/post.service';
 export class AdminComponent {
 
   posts$ = this.postService.getAllPosts();
-  users$ = this.userService.getAllUsers();
+  users$ = this.adminService.getAllUsers();
 
   constructor(
-    private userService: UserService,
-    private postService: PostService
+    private postService: PostService,
+    private adminService: AdminService
   ) {}
 
 }

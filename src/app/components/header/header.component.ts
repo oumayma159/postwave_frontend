@@ -35,7 +35,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.eventBusSub = this.eventBusService.on('logout', () => {
       this.logout();
     });
-    this.isAdmin = localStorage.getItem('role')?.includes('ADMIN')|| false;
   }
 
   ngOnDestroy(): void {

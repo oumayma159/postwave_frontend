@@ -16,13 +16,6 @@ export class StorageService {
     return localStorage.getItem('accessToken');
   }
 
-  public getUser(): User | null {
-    const user = localStorage.getItem('user');
-    if (user) {
-      return JSON.parse(user);
-    }
-    return null;
-  }
 
   public isLoggedIn(): boolean {
     const token = this.getToken();

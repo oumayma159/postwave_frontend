@@ -33,8 +33,8 @@ export class PostService {
     ;
   }
 
-  getPostsById(userId: number): Observable<Post[]> {
-    return this.http.get<Post[]>(`${this.apiUrl}/${userId}`)
+  getPostsById(): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.apiUrl}/currentUserPosts`)
     .pipe(
       catchError((err) => {
         console.error('Error fetching user posts', err);
