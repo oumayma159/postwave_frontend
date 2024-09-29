@@ -21,10 +21,7 @@ export class UpdatePopupComponent {
   }
 
   updatePost(): void {
-    this.postService.updatePost(this.post.id, this.post).subscribe(() => {
-      this.toastr.success('Post updated successfully!', '');
-      this.dialogRef.close(true);
-    });
+    this.dialogRef.close( {data: this.post});
   }
 
 }

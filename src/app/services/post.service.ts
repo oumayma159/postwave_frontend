@@ -55,8 +55,8 @@ export class PostService {
     ;
   }
 
-  updatePost(postId: number, post: Post): Observable<Post> {
-    return this.http.put<Post>(`${this.apiUrl}/update/${postId}`, post)
+  updatePost(postId: number, post: Post): Observable<Post[]> {
+    return this.http.put<Post[]>(`${this.apiUrl}/update/${postId}`, post)
     .pipe(
       catchError(()=>{
         console.error('Error updating post');
@@ -66,8 +66,8 @@ export class PostService {
     ;
   }
 
-  deletePost(postId: number): Observable<Post> {
-    return this.http.delete<Post>(`${this.apiUrl}/delete/${postId}`)
+  deletePost(postId: number): Observable<Post[]> {
+    return this.http.delete<Post[]>(`${this.apiUrl}/delete/${postId}`)
     .pipe(
       catchError(()=>{
         console.error('Error deleting post');
